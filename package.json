@@ -1,0 +1,17 @@
+{
+  "name": "parse-qubicle",
+  "version": "1.0.0",
+  "description": "parse quibicle .qb binary files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kevzettler",
+  "license": "ISC",
+  "dependencies": {
+    "buffer": "^5.0.2",
+    "dissolve": "^0.3.3",
+    "is-buffer": "^1.1.4",
+    "voxel-crunch": "^0.2.1"
+  }
+}
