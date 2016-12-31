@@ -76,9 +76,6 @@ function parseQubicle(BufferLikeData){
       for(z = 0; z < sizeZ; z++){
         for(y = 0; y < sizeY; y++){
           for(x = 0; x < sizeX; x++){
-            var r,g,b;
-            var xPos, yPos, zPos;
-            
             var c1 = buffer.readUInt8(bufferReadIndexPtr);
             bufferReadIndexPtr++;
             var c2 = buffer.readUInt8(bufferReadIndexPtr);
@@ -89,23 +86,13 @@ function parseQubicle(BufferLikeData){
             bufferReadIndexPtr++;
 
             if(a != 0){
-              if(ret.colorFormat == 0){
-                r = c1;
-                g = c2;
-                b = c3;
-              }else{
-                r = c3;
-                g = c2;
-                b = c1;
-              }
-
               matrix.matrix.push({
-                x:x,
-                y:y,
-                z:z,
-                r:r,
-                g:g,
-                b:b,
+                x: ret.zAxisOrientation ? z : x,
+                y: y,
+                z: ret.zAxisOrientation ? x : z,
+                r: !ret.colorFormat ? c1 : c3,
+                g: c2,
+                b: !ret.colorFormat ? c3 : c1,
                 a:a,
               });
 
@@ -127,33 +114,99 @@ function parseQubicle(BufferLikeData){
     }
     
     var z = 0;
+    
     while (z < sizeZ){         
       z++;
       index = 0;
       while(true){
         var data = buffer.readUInt32LE(bufferReadIndexPtr);
-        bufferReadIndexPtr+=4;
-
+        
         if(data === NEXTSLICEFLAG){
           break;
         } else if(data === CODEFLAG){
+          bufferReadIndexPtr+=4;
+          
           var count = buffer.readUInt32LE(bufferReadIndexPtr);
           bufferReadIndexPtr+=4;
 
-          data = buffer.readUInt32LE(bufferReadIndexPtr);
-          bufferReadIndexPtr+=4;
+          /* data = buffer.readUInt32LE(bufferReadIndexPtr);
+           * bufferReadIndexPtr+=4;*/
 
           for(j = 0; j < count; j++) {
-            x = index % sizeX + 1; // mod = modulo e.g. 12 mod 8 = 4
-            y = Math.floor(index / sizeX) + 1; // div = integer division e.g. 12 div 8 = 1
+            var x = index % sizeX + 1; // mod = modulo e.g. 12 mod 8 = 4
+            var y = Math.floor(index / sizeX) + 1; // div = integer division e.g. 12 div 8 = 1
             index++;
-            matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
-          }
+
+            var c1 = buffer.readUInt8(bufferReadIndexPtr);
+            bufferReadIndexPtr++;
+            var c2 = buffer.readUInt8(bufferReadIndexPtr);
+            bufferReadIndexPtr++;
+            var c3 = buffer.readUInt8(bufferReadIndexPtr);
+            bufferReadIndexPtr++;
+            var a = buffer.readUInt8(bufferReadIndexPtr);
+            bufferReadIndexPtr++;
+
+            
+            /* colorBuffer.writeInt32LE(data, 0, false);
+
+             * var c1 = colorBuffer[0] & 0x0000FF;
+             * var c2 = colorBuffer[1] & 0x0000FF;
+             * var c3 = colorBuffer[2] & 0x0000FF;
+             * var a = colorBuffer[3] & 0x0000FF;            
+             * */
+            //matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
+            
+            if(a != 0){
+              matrix.matrix.push({
+                x: ret.zAxisOrientation ? z : x,
+                y: y,
+                z: ret.zAxisOrientation ? x : z,
+                r: !ret.colorFormat ? c1 : c3,
+                g: c2,
+                b: !ret.colorFormat ? c3 : c1,
+                a:a,
+              });
+            }
+
+            colorBufferPtr = 0;
+          }          
         }else{
           x = index % sizeX + 1;
           y = Math.floor(index / sizeX) + 1;
           index++;
-          matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
+
+          /* colorBuffer.writeInt32LE(data, 0, false);
+
+           * var c1 = colorBuffer[0] & 0x0000FF;
+           * var c2 = colorBuffer[1] & 0x0000FF;
+           * var c3 = colorBuffer[2] & 0x0000FF;
+           * var a = colorBuffer[3] & 0x0000FF; */
+
+          var c1 = buffer.readUInt8(bufferReadIndexPtr);
+          bufferReadIndexPtr++;
+          var c2 = buffer.readUInt8(bufferReadIndexPtr);
+          bufferReadIndexPtr++;
+          var c3 = buffer.readUInt8(bufferReadIndexPtr);
+          bufferReadIndexPtr++;
+          var a = buffer.readUInt8(bufferReadIndexPtr);
+          bufferReadIndexPtr++;          
+
+          //matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
+          if(a != 0){          
+            matrix.matrix.push({
+              x: ret.zAxisOrientation ? z : x,
+              y: y,
+              z: ret.zAxisOrientation ? x : z,
+              r: !ret.colorFormat ? c1 : c3,
+              g: c2,
+              b: !ret.colorFormat ? c3 : c1,
+              a:a,
+            });
+          }
+
+//          colorBufferPtr = 0;
+          
+//          matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
         }
       }
     }
