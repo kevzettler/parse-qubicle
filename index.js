@@ -118,7 +118,7 @@ function parseQubicle(BufferLikeData){
     
     while (z < sizeZ){         
       z++;
-      index = 0;
+      index = 1;
       while(true){
         var data = buffer.readUInt32LE(bufferReadIndexPtr);
         bufferReadIndexPtr+=4;
@@ -133,8 +133,8 @@ function parseQubicle(BufferLikeData){
           bufferReadIndexPtr+=4;
 
           for(j = 0; j < count; j++) {
-            var x = index % sizeX + 1; // mod = modulo e.g. 12 mod 8 = 4
-            var y = Math.floor(index / sizeX) + 1; // div = integer division e.g. 12 div 8 = 1
+            var x = index % sizeX; // mod = modulo e.g. 12 mod 8 = 4
+            var y = Math.floor(index / sizeX); // div = integer division e.g. 12 div 8 = 1
             index++;
 
             /* var c1 = buffer.readUInt8(bufferReadIndexPtr);
@@ -170,8 +170,8 @@ function parseQubicle(BufferLikeData){
 
           }          
         }else{
-          x = index % sizeX + 1;
-          y = Math.floor(index / sizeX) + 1;
+          x = index % sizeX;
+          y = Math.floor(index / sizeX);
           index++;
 
           colorBuffer.writeUInt32LE(data, 0, false);
