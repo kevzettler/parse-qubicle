@@ -168,7 +168,6 @@ function parseQubicle(BufferLikeData){
               });
             }
 
-            colorBufferPtr = 0;
           }          
         }else{
           x = index % sizeX + 1;
@@ -203,8 +202,6 @@ function parseQubicle(BufferLikeData){
               a:a,
             });
           }
-
-//          colorBufferPtr = 0;
           
 //          matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
         }
