@@ -117,10 +117,9 @@ function parseQubicle(BufferLikeData){
     var colorBuffer = Buffer.alloc(4);
     
     while (z < sizeZ){         
-      z++;
-      index = -1;
+      var index = -1;
       while(true){
-        var data = buffer.readUInt32LE(bufferReadIndexPtr);
+        var data = buffer.readInt32LE(bufferReadIndexPtr);
         bufferReadIndexPtr+=4;
         
         if(data === NEXTSLICEFLAG){
@@ -134,20 +133,11 @@ function parseQubicle(BufferLikeData){
 
           for(j = 0; j < count; j++) {
             var x = (index+1) % sizeX; // mod = modulo e.g. 12 mod 8 = 4
-            var y = Math.floor((index+1) / sizeX); // div = integer division e.g. 12 div 8 = 1
+            var y = ~~((index+1) / sizeX); // div = integer division e.g. 12 div 8 = 1
             index++;
 
-            /* var c1 = buffer.readUInt8(bufferReadIndexPtr);
-             * bufferReadIndexPtr++;
-             * var c2 = buffer.readUInt8(bufferReadIndexPtr);
-             * bufferReadIndexPtr++;
-             * var c3 = buffer.readUInt8(bufferReadIndexPtr);
-             * bufferReadIndexPtr++;
-             * var a = buffer.readUInt8(bufferReadIndexPtr);
-             * bufferReadIndexPtr++;*/
-
             
-            colorBuffer.writeUInt32LE(data, 0, false);
+            colorBuffer.writeInt32LE(data, 0, false);
 
             var c1 = colorBuffer[0] & 0x0000FF;
             var c2 = colorBuffer[1] & 0x0000FF;
@@ -171,24 +161,15 @@ function parseQubicle(BufferLikeData){
           }          
         }else{
           x = (index+1) % sizeX;
-          y = Math.floor((index+1) / sizeX);
+          y = ~~((index+1) / sizeX);
           index++;
 
-          colorBuffer.writeUInt32LE(data, 0, false);
+          colorBuffer.writeInt32LE(data, 0, false);
 
           var c1 = colorBuffer[0] & 0x0000FF;
           var c2 = colorBuffer[1] & 0x0000FF;
           var c3 = colorBuffer[2] & 0x0000FF;
           var a = colorBuffer[3] & 0x0000FF;
-
-          /* var c1 = buffer.readUInt8(bufferReadIndexPtr);
-           * bufferReadIndexPtr++;
-           * var c2 = buffer.readUInt8(bufferReadIndexPtr);
-           * bufferReadIndexPtr++;
-           * var c3 = buffer.readUInt8(bufferReadIndexPtr);
-           * bufferReadIndexPtr++;
-           * var a = buffer.readUInt8(bufferReadIndexPtr);
-           * bufferReadIndexPtr++;          */
 
           //matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
           if(a != 0){          
@@ -206,6 +187,7 @@ function parseQubicle(BufferLikeData){
 //          matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
         }
       }
+      z++;
     }
   
   }
