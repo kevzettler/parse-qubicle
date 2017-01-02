@@ -85,9 +85,9 @@ function parseQubicle(BufferLikeData){
             
             if(a != 0){
               matrix.matrix.push({
-                x: ret.zAxisOrientation == 1 ? x : z,
+                x: ret.zAxisOrientation == 1 ? z : x,
                 y: y,
-                z: ret.zAxisOrientation == 1 ? z : x,
+                z: ret.zAxisOrientation == 1 ? x : z,
                 r: !ret.colorFormat ? c1 : c3,
                 g: c2,
                 b: !ret.colorFormat ? c3 : c1,
@@ -99,7 +99,6 @@ function parseQubicle(BufferLikeData){
       }
 
     }else{
-      
       var z = 0;
       var colorBuffer = Buffer.alloc(4);
       
@@ -131,8 +130,6 @@ function parseQubicle(BufferLikeData){
               var c3 = colorBuffer[2] & 0x0000FF;
               var a = colorBuffer[3] & 0x0000FF;            
 
-              //matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
-              
               if(a != 0){
                 matrix.matrix.push({
                   x: ret.zAxisOrientation ? z : x,
@@ -158,7 +155,6 @@ function parseQubicle(BufferLikeData){
             var c3 = colorBuffer[2] & 0x0000FF;
             var a = colorBuffer[3] & 0x0000FF;
 
-            //matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
             if(a != 0){          
               matrix.matrix.push({
                 x: ret.zAxisOrientation ? z : x,
@@ -170,8 +166,6 @@ function parseQubicle(BufferLikeData){
                 a:a,
               });
             }
-            
-            //          matrix.matrix[x + y*sizeX + z*sizeX*sizeY] = data;
           }
         }
         z++;
