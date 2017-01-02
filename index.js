@@ -1,7 +1,5 @@
 var Buffer = require('buffer').Buffer;
 var isBuffer = require('is-buffer');
-var Dissolve = require('dissolve');
-var VoxelCrunch = require("voxel-crunch");
 
 const NEXTSLICEFLAG = 6;
 const CODEFLAG = 2;

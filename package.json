@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "buffer": "^5.0.2",
-    "dissolve": "^0.3.3",
     "is-buffer": "^1.1.4",
-    "voxel-crunch": "^0.2.1"
   }
 }
