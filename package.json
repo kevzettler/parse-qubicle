@@ -1,13 +1,18 @@
 {
   "name": "parse-qubicle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "parse quibicle .qb binary files",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevzettler/parse-qubicle.git"
   },
   "author": "kevzettler",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevzettler/parse-qubicle/issues"
+  },
+  "homepage": "https://github.com/kevzettler/parse-qubicle#readme",
   "dependencies": {
     "buffer": "^5.0.2",
     "is-buffer": "^1.1.4"
