@@ -2,6 +2,7 @@
 
 ## Install
 Javascript parser for Qubicle Binary file format:
+
 http://minddesk.com/wiki/index.php?title=Qubicle_Constructor_1:Data_Exchange_With_Qubicle_Binary
 
 Works in browser and server Node.js environments
@@ -14,14 +15,14 @@ npm install parse-qubicle
 
 ### Input
 
-```
+```javascript
   var parseQubicle = require('parse-qubicle');
   //read a .qb file as an arrayBuffer from file system or xhr request;
   var qbJSON = parseQubicle(arrayBuffer);
 ```
 
 ### Output
-```
+```javascript
 {
   "version":257,
   "colorFormat":0,
