@@ -14,14 +14,14 @@ npm install parse-qubicle
 
 ### Input
 
-```
+```javascript
   var parseQubicle = require('parse-qubicle');
   //read a .qb file as an arrayBuffer from file system or xhr request;
   var qbJSON = parseQubicle(arrayBuffer);
 ```
 
 ### Output
-```
+```javascript
 {
   "version":257,
   "colorFormat":0,
