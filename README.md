@@ -3,7 +3,7 @@
 ## Install
 Javascript parser for Qubicle Binary file format:
 
-http://minddesk.com/wiki/index.php?title=Qubicle_Constructor_1:Data_Exchange_With_Qubicle_Binary
+https://web.archive.org/web/20150303075003/http://minddesk.com/wiki/index.php?title=Qubicle_Constructor_1:Data_Exchange_With_Qubicle_Binary
 
 Works in browser and server Node.js environments
 
